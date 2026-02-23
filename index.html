@@ -9,7 +9,7 @@
 *{box-sizing:border-box;}
 body{
     margin:0;
-    font-family:'Poppins',sans-serif;
+    font-family:'Poppins',sans-serif; letter-spacing:0.2px;
     color:#f8fafc;
     overflow:hidden;
     background:
@@ -17,15 +17,24 @@ body{
       url('baground.jpg');
     background-size:cover;
     background-position:center;
+    animation: bgZoom 40s ease-in-out infinite alternate;
 }
 
 /* ⭐ BIG GLASS */
 .glass{
-    backdrop-filter: blur(10px);
-    background: rgba(255,255,255,0.06);
-    border:1px solid rgba(255,255,255,0.18);
-    box-shadow:0 40px 120px rgba(0,0,0,0.75);
-    border-radius:32px;
+    position:relative;
+    backdrop-filter: blur(16px);
+    background: linear-gradient(
+  135deg,
+  rgba(255,255,255,0.08),
+  rgba(255,255,255,0.03)
+);
+    border:1px solid rgba(255,255,255,0.14);
+    box-shadow:
+        0 40px 120px rgba(0,0,0,0.75),
+        inset 0 1px 0 rgba(255,255,255,0.25),
+        0 0 60px rgba(168,85,247,0.25);
+    border-radius:32px; transform: translateZ(0);
     padding: clamp(30px, 5vw, 60px);
     width: min(94vw, 1100px);
     min-height: min(82vh, 820px);
@@ -40,6 +49,7 @@ body{
 /* mobile stack */
 @media (max-width: 768px){
   .glass{
+    position:relative;
     grid-template-columns:1fr;
     text-align:center;
   }
@@ -56,11 +66,27 @@ body{
 }
 
 .main-title{
+  letter-spacing:1px;
+  text-shadow:0 10px 40px rgba(0,0,0,0.9);
+  position: relative;
     font-family:'Playfair Display',serif;
     font-size:clamp(44px,6vw,72px);
     background:linear-gradient(135deg,#fff7ed,#fde68a,#e9d5ff);
     -webkit-background-clip:text;
     -webkit-text-fill-color:transparent;
+}
+
+.main-title::after{
+  content:"";
+  position:absolute;
+  inset:-20px -40px;
+  background: radial-gradient(circle,
+      rgba(168,85,247,0.25),
+      rgba(245,158,11,0.18),
+      transparent 70%);
+  filter: blur(35px);
+  z-index:-1;
+  opacity:.7;
 }
 
 .sub{color:#e5e7eb;font-weight:300;}
@@ -72,7 +98,7 @@ body{
 }
 .container.show{opacity:1;transform:translateY(0) scale(1);}
 
-.btn{
+
     margin-top:26px;
     padding:16px 40px;
     font-size:16px;
@@ -98,6 +124,7 @@ body{
 
 /* portrait frame */
 .photo-frame{
+  transition: transform .6s ease, box-shadow .6s ease;
     width:min(320px, 70vw);
     aspect-ratio:4/5;
     border-radius:28px;
@@ -105,6 +132,7 @@ body{
     position:relative;
     box-shadow:
         0 35px 90px rgba(0,0,0,.85),
+        0 0 40px rgba(168,85,247,0.35),
         inset 0 0 40px rgba(255,255,255,0.06);
     background:#000;
 }
@@ -114,7 +142,7 @@ body{
     height:100%;
     object-fit:cover;
     object-position:50% 35%;
-    transition:opacity .6s ease, transform 8s ease;
+    transition:opacity .6s ease, transform 12s cubic-bezier(.2,.8,.2,1);
 }
 .photo-frame img.active{
     transform:scale(1.12);
@@ -136,6 +164,9 @@ body{
 }
 
 #startScreen .main-title{
+  letter-spacing:1px;
+  text-shadow:0 10px 40px rgba(0,0,0,0.9);
+  position: relative;
     font-family:'Playfair Display',serif;
     font-size:clamp(48px,7vw,90px);
     line-height:1.15;
@@ -170,7 +201,7 @@ body{
     z-index:-1;
 }
 
-#startScreen .btn{
+#startScreen 
     margin-top:32px;
     padding:18px 48px;
     font-size:17px;
@@ -185,6 +216,13 @@ body{
         0 20px 60px rgba(168,85,247,0.45);
 
     transition:all .25s ease;
+}
+
+.btn:hover{
+  transform: translateY(-4px) scale(1.07);
+  box-shadow:
+      0 25px 70px rgba(168,85,247,0.55),
+      0 0 30px rgba(245,158,11,0.35);
 }
 
 #startScreen .btn:hover{
@@ -217,6 +255,9 @@ body{
 }
 
 #startScreen .main-title{
+  letter-spacing:1px;
+  text-shadow:0 10px 40px rgba(0,0,0,0.9);
+  position: relative;
     white-space:nowrap;
     max-width:95vw;
     overflow:hidden;
@@ -233,6 +274,9 @@ body{
 
 /* ===== SMART TITLE SCALING ===== */
 #startScreen .main-title{
+  letter-spacing:1px;
+  text-shadow:0 10px 40px rgba(0,0,0,0.9);
+  position: relative;
     white-space:normal;                 /* allow wrapping if needed */
     font-size:clamp(32px,6vw,82px);     /* smart responsive size */
     line-height:1.15;
@@ -255,6 +299,408 @@ body{
     user-select:none;
 }
 
+
+.glass{
+    position:relative;
+  animation: floatCard 6s ease-in-out infinite;
+}
+
+@keyframes floatCard{
+  0%,100%{ transform: translateY(0); }
+  50%{ transform: translateY(-8px); }
+}
+
+
+@media (max-width:768px){
+
+  .glass{
+    position:relative;
+    padding: 28px 20px;
+    border-radius: 26px;
+  }
+
+  .main-title{
+  letter-spacing:1px;
+  text-shadow:0 10px 40px rgba(0,0,0,0.9);
+    letter-spacing: 0.5px;
+  }
+
+  .photo-frame{
+  transition: transform .6s ease, box-shadow .6s ease;
+    width: min(260px, 78vw);
+  }
+
+}
+
+
+@keyframes bgZoom{
+  from{ background-size: 100%; }
+  to{ background-size: 115%; }
+}
+
+
+/* ===== Heartbeat glow for name ===== */
+.sub span.heartbeat{
+  animation: heartbeatGlow 2.2s ease-in-out infinite;
+  display:inline-block;
+}
+
+@keyframes heartbeatGlow{
+  0%,100%{ text-shadow:0 0 6px rgba(236,72,153,0.35); transform:scale(1); }
+  50%{ text-shadow:0 0 16px rgba(236,72,153,0.9); transform:scale(1.06); }
+}
+
+
+/* ===== Shooting stars ===== */
+.shooting-star{
+  position:fixed;
+  width:2px;
+  height:80px;
+  background:linear-gradient(180deg, white, transparent);
+  opacity:0;
+  transform:rotate(45deg);
+  pointer-events:none;
+  z-index:2;
+  animation:shoot 6s linear infinite;
+}
+
+@keyframes shoot{
+  0%{ opacity:0; transform:translate(-20vw,-20vh) rotate(45deg); }
+  10%{ opacity:1; }
+  100%{ opacity:0; transform:translate(120vw,120vh) rotate(45deg); }
+}
+
+
+/* ===== Touch sparkle ===== */
+.touch-sparkle{
+  position:fixed;
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:white;
+  pointer-events:none;
+  z-index:999;
+  animation:sparkleFade 700ms ease-out forwards;
+}
+
+@keyframes sparkleFade{
+  0%{ opacity:1; transform:scale(1); }
+  100%{ opacity:0; transform:scale(0.2); }
+}
+
+
+/* ===== Restored premium button ===== */
+.btn{
+    margin-top:26px;
+    padding:16px 40px;
+    font-size:16px;
+    border:none;
+    border-radius:999px;
+    background:linear-gradient(135deg,#f59e0b,#a855f7);
+    color:white;
+    cursor:pointer;
+    box-shadow:0 18px 50px rgba(0,0,0,.45);
+    transition:all .25s ease;
+}
+
+.btn:hover{
+    transform: translateY(-4px) scale(1.07);
+    box-shadow:
+        0 25px 70px rgba(168,85,247,0.55),
+        0 0 30px rgba(245,158,11,0.35);
+}
+
+
+/* ===== Button ripple ===== */
+.btn{
+  position:relative;
+  overflow:hidden;
+}
+
+.btn::after{
+  content:"";
+  position:absolute;
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:rgba(255,255,255,0.5);
+  transform:scale(0);
+  opacity:0;
+  pointer-events:none;
+  transition:transform .4s, opacity .6s;
+}
+
+.btn:active::after{
+  transform:scale(20);
+  opacity:0.15;
+  transition:0s;
+}
+
+
+/* ===== Music reactive pulse ===== */
+.glass.music-pulse{
+  box-shadow:
+    0 40px 120px rgba(168,85,247,0.35),
+    0 0 80px rgba(245,158,11,0.25);
+  transition: box-shadow .25s ease;
+}
+
+
+/* ===== Cinematic vignette ===== */
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background:radial-gradient(circle at center,
+      transparent 55%,
+      rgba(0,0,0,0.35));
+  z-index:1;
+}
+
+
+/* ===== Animated gradient mesh background ===== */
+body::before{
+  content:"";
+  position:fixed;
+  inset:-20%;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(168,85,247,0.25), transparent 40%),
+    radial-gradient(circle at 80% 20%, rgba(245,158,11,0.22), transparent 45%),
+    radial-gradient(circle at 50% 80%, rgba(236,72,153,0.18), transparent 40%);
+  animation: gradientMesh 18s ease-in-out infinite alternate;
+  z-index:0;
+  pointer-events:none;
+}
+
+@keyframes gradientMesh{
+  0%{ transform: translateY(0) scale(1); }
+  100%{ transform: translateY(-4%) scale(1.08); }
+}
+
+
+.glass::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  background:linear-gradient(120deg,
+      rgba(255,255,255,0.25),
+      rgba(255,255,255,0.05) 30%,
+      transparent 60%);
+  pointer-events:none;
+  opacity:.35;
+}
+
+
+/* ===== Smooth page fade-in ===== */
+body{
+  animation: pageFadeIn 1.2s ease;
+}
+
+@keyframes pageFadeIn{
+  from{ opacity:0; transform:scale(1.02); }
+  to{ opacity:1; transform:scale(1); }
+}
+
+
+/* ===== Ultra smooth motion tuning ===== */
+*{
+  -webkit-tap-highlight-color: transparent;
+}
+
+.glass,
+.photo-frame,
+.btn,
+.main-title{
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+
+html{
+  scroll-behavior: smooth;
+}
+
+
+/* ===== Ambient cinematic glow ===== */
+body::after{
+  content:"";
+  position:fixed;
+  inset:-10%;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(168,85,247,0.08), transparent 60%),
+    radial-gradient(circle at 30% 70%, rgba(245,158,11,0.06), transparent 65%);
+  filter: blur(60px);
+  pointer-events:none;
+  z-index:0;
+  animation: ambientFloat 22s ease-in-out infinite alternate;
+}
+
+@keyframes ambientFloat{
+  0%{ transform: translateY(0) scale(1); }
+  100%{ transform: translateY(-3%) scale(1.05); }
+}
+
+
+/* ===== Premium button sheen sweep ===== */
+.btn::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  background:linear-gradient(120deg, transparent, rgba(255,255,255,0.35), transparent);
+  opacity:0;
+  transform: translateX(-120%);
+}
+
+.btn:hover::before{
+  opacity:.6;
+  transform: translateX(120%);
+  transition: transform .6s ease, opacity .4s ease;
+}
+
+
+/* ===== Dynamic light sweep across glass ===== */
+.glass::after{
+  content:"";
+  position:absolute;
+  top:-40%;
+  left:-60%;
+  width:60%;
+  height:180%;
+  background:linear-gradient(120deg,
+      transparent,
+      rgba(255,255,255,0.25),
+      transparent);
+  transform:rotate(25deg);
+  opacity:.25;
+  animation: glassLightSweep 6s ease-in-out infinite;
+  pointer-events:none;
+}
+
+@keyframes glassLightSweep{
+  0%{ transform: translateX(-120%) rotate(25deg); }
+  100%{ transform: translateX(220%) rotate(25deg); }
+}
+
+
+/* ===== Title shimmer effect ===== */
+.main-title{
+  background-size:200% 200%;
+  animation: titleShimmer 8s ease-in-out infinite;
+}
+
+@keyframes titleShimmer{
+  0%{ background-position:0% 50%; }
+  50%{ background-position:100% 50%; }
+  100%{ background-position:0% 50%; }
+}
+
+
+/* ===== Floating ambient stars ===== */
+.bg-float-star{
+  position:fixed;
+  width:2px;
+  height:2px;
+  background:white;
+  border-radius:50%;
+  opacity:.6;
+  pointer-events:none;
+  z-index:0;
+  animation: floatStar linear infinite;
+}
+
+@keyframes floatStar{
+  from{ transform: translateY(110vh); opacity:.2; }
+  to{ transform: translateY(-10vh); opacity:.9; }
+}
+
+
+/* ===== Hero ambient pulse ===== */
+.glass.hero-pulse{
+  animation: heroPulse 3.2s ease-in-out infinite;
+}
+
+@keyframes heroPulse{
+  0%,100%{
+    box-shadow:
+      0 40px 120px rgba(168,85,247,0.25),
+      0 0 80px rgba(245,158,11,0.18);
+  }
+  50%{
+    box-shadow:
+      0 50px 160px rgba(168,85,247,0.45),
+      0 0 120px rgba(245,158,11,0.28);
+  }
+}
+
+
+/* ===== Chromatic luxury title glow ===== */
+.main-title{
+  filter: drop-shadow(0 0 12px rgba(168,85,247,0.35));
+}
+
+
+/* ===== Top-right info button ===== */
+.info-btn{
+  position:absolute;
+  top:14px;
+  right:14px;
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  border:none;
+  cursor:pointer;
+  background:linear-gradient(135deg,#a855f7,#f59e0b);
+  color:white;
+  font-weight:600;
+  font-size:18px;
+  box-shadow:0 10px 30px rgba(0,0,0,.35);
+  z-index:5;
+}
+
+/* ===== Info modal ===== */
+.info-modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.65);
+  backdrop-filter:blur(6px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .35s ease;
+  z-index:50;
+}
+
+.info-modal.show{
+  opacity:1;
+  pointer-events:auto;
+}
+
+.info-card{
+  width:min(90vw,420px);
+  background:linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.05));
+  border:1px solid rgba(255,255,255,0.18);
+  backdrop-filter:blur(18px);
+  border-radius:22px;
+  padding:26px 22px;
+  color:#fff;
+  text-align:center;
+  box-shadow:0 40px 120px rgba(0,0,0,.6);
+}
+
+.info-close{
+  margin-top:16px;
+  padding:10px 22px;
+  border:none;
+  border-radius:999px;
+  background:linear-gradient(135deg,#f59e0b,#a855f7);
+  color:white;
+  cursor:pointer;
+}
+
 </style>
 </head>
 <body>
@@ -265,7 +711,7 @@ body{
 </div>
 
 <audio id="bgMusic" preload="auto">
-  <source src="bgmusic.m4a" type="audio/mp4">
+  <source src="bgmusic.m4a" type="audio/mpeg">
 </audio>
 
 <script>
@@ -279,11 +725,12 @@ window.addEventListener("load", () => {
 
 <div class="container" id="mainContent">
   <div class="glass">
+      <button class="info-btn" onclick="openInfo()" style="font-size:12px;width:auto;padding:0 14px;border-radius:999px;">Secret Msg</button>
 
     <!-- LEFT TEXT -->
     <div class="text-col">
       <h1 class="main-title">Happy Birthday</h1>
-      <h2 class="sub">Dear Ananya(dhapni) 🌙💖</h2>
+      <h2 class="sub">Dear <span class="heartbeat">Ananya (dhapni)</span> 🌙💖</h2>
       <p class="sub">Happy Birthday  🌙✨
 Tonight the stars shine a little softer,
 the moon glows a little brighter —
@@ -334,14 +781,14 @@ let idx=0;
 const slideEl=document.getElementById("slide");
 
 setInterval(()=>{
- slideEl.style.opacity=0;
+ slideEl.style.opacity=0; slideEl.style.transform='scale(1.04)';
  setTimeout(()=>{
    idx=(idx+1)%images.length;
    slideEl.src=images[idx];
    slideEl.classList.remove("active");
    void slideEl.offsetWidth;
    slideEl.classList.add("active");
-   slideEl.style.opacity=1;
+   slideEl.style.opacity=1; slideEl.style.transform='scale(1.12)';
  },350);
 },3400);
 
@@ -353,9 +800,20 @@ resize();window.addEventListener("resize",resize);
 
 let particles=[], driftX=0, driftY=0;
 
+
+/* ===== Dramatic particle burst ===== */
+function dramaticBurst(){
+  particles.forEach(p=>{
+    p.x = Math.random()*canvas.width;
+    p.y = Math.random()*canvas.height;
+  });
+}
+
 function formStarText(){
     const text="Happy Birthday\nfrom unkown";
-    const fontSize=Math.min(100, window.innerWidth/10);
+    const fontSize = window.innerWidth < 600
+  ? Math.min(64, window.innerWidth/8.5)
+  : Math.min(100, window.innerWidth/10);
 
     const off=document.createElement("canvas");
     const offCtx=off.getContext("2d");
@@ -374,20 +832,28 @@ function formStarText(){
     const img=offCtx.getImageData(0,0,off.width,off.height).data;
 
     particles=[];
-    const gap = window.innerWidth < 600 ? 10 : 6;
-    for(let y=0;y<off.height;y+=gap){
-        for(let x=0;x<off.width;x+=gap){
-            const index=(y*off.width+x)*4;
-            if(img[index+3]>128){
-                particles.push({
-                    baseX:(canvas.width-off.width)/2 + x,
-                    baseY:(canvas.height-off.height)/2 + y,
-                    x:Math.random()*canvas.width,
-                    y:Math.random()*canvas.height
-                });
-            }
+
+// ⭐ adaptive density (more dots on mobile)
+const isMobile = window.innerWidth < 600;
+const gap = isMobile ? 1 : 5;  // MAX density for mobile   // ← more particles
+
+for(let y=0;y<off.height;y+=gap){
+    for(let x=0;x<off.width;x+=gap){
+        const index=(y*off.width+x)*4;
+
+        if(img[index+3]>128){
+            particles.push({
+                baseX:(canvas.width-off.width)/2 + x,
+                baseY:(canvas.height-off.height)/2 + y,
+                x:Math.random()*canvas.width,
+                y:Math.random()*canvas.height,
+                size: isMobile ? Math.random()*0.45 + 0.25
+                               : Math.random()*1 + 0.6
+            });
         }
     }
+}
+    dramaticBurst();
     animateParticles();
 }
 
@@ -400,15 +866,23 @@ function animateParticles(){
         const oy=Math.cos(driftY)*25;
 
         particles.forEach(p=>{
-            const ease = window.innerWidth < 600 ? 0.12 : 0.06;
-            p.x += (p.baseX+ox - p.x)*ease;
-            p.y += (p.baseY+oy - p.y)*ease;
+            p.x += (p.baseX+ox - p.x)*0.14;
+            p.y += (p.baseY+oy - p.y)*0.14;
 
-            ctx.fillStyle="rgba(255,255,255,0.98)";
+            
             ctx.beginPath();
-            const size = window.innerWidth < 600 ? 2.6 : 1.9;
-            ctx.arc(p.x,p.y,size,0,Math.PI*2);
-            ctx.fill();
+            // draw short glowing line instead of dot
+            const isMobile = window.innerWidth < 600;
+
+// ✨ glow for premium feel
+ctx.shadowBlur = isMobile ? 3 : 6;
+ctx.shadowColor = "rgba(255,255,255,0.9)";
+
+// ⭐ tiny sharp dots
+ctx.fillStyle = "rgba(255,255,255,0.95)";
+ctx.beginPath();
+ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+ctx.fill();
         });
         requestAnimationFrame(frame);
     }
@@ -435,8 +909,66 @@ function animateParticles(){
   }
 })();
 
+
+/* ===== Mobile parallax tilt ===== */
+(function(){
+  const frame=document.querySelector('.photo-frame');
+  if(!frame) return;
+
+  window.addEventListener('deviceorientation', (e)=>{
+    const x=(e.gamma||0)/30;
+    const y=(e.beta||0)/40;
+    frame.style.transform=`rotateY(${x}deg) rotateX(${-y}deg)`;
+  });
+})();
+
+
+/* ===== Premium touch tilt ===== */
+(function(){
+  const frame=document.querySelector('.photo-frame');
+  if(!frame) return;
+
+  window.addEventListener('touchmove',(e)=>{
+    const t=e.touches[0];
+    const x=(t.clientX/window.innerWidth - 0.5)*10;
+    const y=(t.clientY/window.innerHeight - 0.5)*10;
+    frame.style.transform=`rotateY(${x}deg) rotateX(${-y}deg) scale(1.02)`;
+  });
+
+  window.addEventListener('touchend',()=>{
+    frame.style.transform='';
+  });
+})();
+
+
+/* ===== Activate hero pulse ===== */
+(function(){
+  const glass=document.querySelector('.glass');
+  if(!glass) return;
+  setTimeout(()=>glass.classList.add('hero-pulse'),1200);
+})();
+
+
+function openInfo(){
+  document.getElementById('infoModal').classList.add('show');
+}
+function closeInfo(){
+  document.getElementById('infoModal').classList.remove('show');
+}
+
 </script>
 
+<div id="shootingLayer"></div>
+<div id="floatStarLayer"></div>
 <div class="binary-signature">01101011 01100001 01110010 01110100 01101001 01101011</div>
+
+<div class="info-modal" id="infoModal">
+  <div class="info-card">
+    <h3>Secret Message 💌</h3>
+    <p>If you are reading this… you are truly special. This little universe was made just to make you smile. 🌙✨. I literally used every single neuron in my brain 🧠 to create this. The background is from the exact day you were born — taken from NASA’s Hubble archive 🔭🌌. Everything here is carefully calculated 📐. And I’m sorry for not asking your permission… but if I had told you, it wouldn’t have been a surprise, dude... i just dont wanna share who am im i just being hidden. ik you wont care who made it up but im confused that am i happy or sad but no one cares. be happy enjoy your day. ik its kinda wierd that a person is doing a lot of efforts on a birthday wish but im just trying to make some one feel special.i have left my identity on the website. if you can find its good or let it be.... </p>
+    <button class="info-close" onclick="closeInfo()">Close</button>
+  </div>
+</div>
+
 </body>
 </html>
