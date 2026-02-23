@@ -23,7 +23,7 @@ body{
 /* ⭐ BIG GLASS */
 .glass{
     position:relative;
-    backdrop-filter: blur(16px);
+    backdrop-filter: blur(10px);
     background: linear-gradient(
   135deg,
   rgba(255,255,255,0.08),
@@ -84,7 +84,7 @@ body{
       rgba(168,85,247,0.25),
       rgba(245,158,11,0.18),
       transparent 70%);
-  filter: blur(35px);
+  filter: blur(10px);
   z-index:-1;
   opacity:.7;
 }
@@ -197,7 +197,7 @@ body{
     background:radial-gradient(circle,
         rgba(253,224,71,0.20),
         transparent 60%);
-    filter:blur(70px);
+    filter: blur(10px);
     z-index:-1;
 }
 
@@ -627,7 +627,7 @@ html{
   position:fixed;
   inset:0;
   background:rgba(0,0,0,0.65);
-  backdrop-filter:blur(6px);
+  backdrop-filter: blur(10px);
   display:flex;
   align-items:center;
   justify-content:center;
@@ -646,7 +646,7 @@ html{
   width:min(90vw,420px);
   background:linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.05));
   border:1px solid rgba(255,255,255,0.18);
-  backdrop-filter:blur(18px);
+  backdrop-filter: blur(10px);
   border-radius:22px;
   padding:26px 22px;
   color:#fff;
@@ -707,7 +707,7 @@ The universe has beautiful things waiting for you. 💫💖✨</p>
     <!-- RIGHT PHOTO -->
     <div class="photo-col">
       <div class="photo-frame">
-          <img id="slide" src="photo1.jpg" alt="memories" class="active">
+          <img id="slide" src="photo1.jpeg" alt="memories" class="active">
       </div>
     </div>
 
@@ -739,7 +739,7 @@ function startExperience(){
 }
 
 /* slideshow */
-const images=["photo1.jpg","photo2.jpg","photo3.jpg"];
+const images=["photo1.jpeg","photo2.jpeg","photo3.jpeg"];
 let idx=0;
 const slideEl=document.getElementById("slide");
 
@@ -808,7 +808,7 @@ function formStarText(){
 const isMobile = window.innerWidth < 600;
 let gap;
 if(isMobile){
-  gap = PERF.isLowEnd ? 4 : 2;  // adaptive density
+  gap = PERF.isLowEnd ? 6 : 4;  // EXTREME lite density
 }else{
   gap = 6;
 }  // MAX density for mobile   // ← more particles
@@ -830,6 +830,10 @@ for(let y=0;y<off.height;y+=gap){
     }
 }
     dramaticBurst();
+    // hard cap for mobile safety
+    if (isMobile && particles.length > 700) {
+      particles.length = 1200;
+    }
     animateParticles();
 }
 
@@ -842,8 +846,8 @@ function animateParticles(){
         const oy=Math.cos(driftY)*25;
 
         particles.forEach(p=>{
-            p.x += (p.baseX+ox - p.x)*0.07;
-            p.y += (p.baseY+oy - p.y)*0.07;
+            p.x += (p.baseX+ox - p.x)*0.035;
+            p.y += (p.baseY+oy - p.y)*0.035;
 
             
             ctx.beginPath();
@@ -851,7 +855,7 @@ function animateParticles(){
             const isMobile = window.innerWidth < 600;
 
 // ✨ glow for premium feel
-ctx.shadowBlur = isMobile ? 3 : 6;
+ctx.shadowBlur = 0;
 ctx.shadowColor = "rgba(255,255,255,0.9)";
 
 // ⭐ tiny sharp dots
@@ -931,7 +935,9 @@ function closeInfo(){
 <div class="info-modal" id="infoModal">
   <div class="info-card">
     <h3>Secret Message 💌</h3>
-    <p>If you are reading this… you are truly special. This little universe was made just to make you smile. 🌙✨</p>
+    <p>If you are reading this… you are truly special. This little universe was made just to make you smile. 🌙✨. I literally used every single neuron in my brain 🧠 to create this. The background is from the exact day you were born — taken from NASA’s Hubble archive 🔭🌌. Everything here is carefully calculated 📐. And I’m sorry for not asking your permission… but if I had told you, it wouldn’t have been a surprise, dude... i just dont wanna share who am im i just being hidden. ik you wont care who made it up but im confused that am i happy or sad but no one cares. be happy enjoy your day. ik its kinda wierd that a person is doing a lot of efforts on a birthday wish but im just trying to make some one feel special.i have left my identity on the website. if you can find its good or let it be....
+
+Close 🌙✨</p>
     <button class="info-close" onclick="closeInfo()">Close</button>
   </div>
 </div>
