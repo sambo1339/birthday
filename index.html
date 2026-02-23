@@ -495,11 +495,8 @@ body::before{
 
 /* ===== Smooth page fade-in ===== */
 body{
-  animation: pageFadeIn 1.2s ease;
-}
 
-@keyframes pageFadeIn{
-  from{ opacity:0; transform:scale(1.02); }
+
   to{ opacity:1; transform:scale(1); }
 }
 
@@ -522,22 +519,7 @@ html{
 }
 
 
-/* ===== Ambient cinematic glow ===== */
-body::after{
-  content:"";
-  position:fixed;
-  inset:-10%;
-  background:
-    radial-gradient(circle at 50% 50%, rgba(168,85,247,0.08), transparent 60%),
-    radial-gradient(circle at 30% 70%, rgba(245,158,11,0.06), transparent 65%);
-  filter: blur(60px);
-  pointer-events:none;
-  z-index:0;
-  animation: ambientFloat 22s ease-in-out infinite alternate;
-}
-
-@keyframes ambientFloat{
-  0%{ transform: translateY(0) scale(1); }
+/* ambient glow removed for performance */
   100%{ transform: translateY(-3%) scale(1.05); }
 }
 
@@ -560,26 +542,7 @@ body::after{
 }
 
 
-/* ===== Dynamic light sweep across glass ===== */
-.glass::after{
-  content:"";
-  position:absolute;
-  top:-40%;
-  left:-60%;
-  width:60%;
-  height:180%;
-  background:linear-gradient(120deg,
-      transparent,
-      rgba(255,255,255,0.25),
-      transparent);
-  transform:rotate(25deg);
-  opacity:.25;
-  animation: glassLightSweep 6s ease-in-out infinite;
-  pointer-events:none;
-}
-
-@keyframes glassLightSweep{
-  0%{ transform: translateX(-120%) rotate(25deg); }
+/* glass sweep removed for performance */
   100%{ transform: translateX(220%) rotate(25deg); }
 }
 
@@ -617,7 +580,7 @@ body::after{
 
 
 /* ===== Hero ambient pulse ===== */
-.glass.hero-pulse{
+.glass.hero-pulse{ /* simplified */
   animation: heroPulse 3.2s ease-in-out infinite;
 }
 
@@ -798,6 +761,14 @@ const ctx=canvas.getContext("2d");
 function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}
 resize();window.addEventListener("resize",resize);
 
+
+/* ===== Adaptive performance mode ===== */
+const PERF = {
+  isLowEnd: (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) ||
+            (navigator.deviceMemory && navigator.deviceMemory <= 4) ||
+            window.innerWidth < 400
+};
+
 let particles=[], driftX=0, driftY=0;
 
 
@@ -835,7 +806,12 @@ function formStarText(){
 
 // ⭐ adaptive density (more dots on mobile)
 const isMobile = window.innerWidth < 600;
-const gap = isMobile ? 1 : 5;  // MAX density for mobile   // ← more particles
+let gap;
+if(isMobile){
+  gap = PERF.isLowEnd ? 4 : 2;  // adaptive density
+}else{
+  gap = 6;
+}  // MAX density for mobile   // ← more particles
 
 for(let y=0;y<off.height;y+=gap){
     for(let x=0;x<off.width;x+=gap){
@@ -866,8 +842,8 @@ function animateParticles(){
         const oy=Math.cos(driftY)*25;
 
         particles.forEach(p=>{
-            p.x += (p.baseX+ox - p.x)*0.14;
-            p.y += (p.baseY+oy - p.y)*0.14;
+            p.x += (p.baseX+ox - p.x)*0.07;
+            p.y += (p.baseY+oy - p.y)*0.07;
 
             
             ctx.beginPath();
@@ -910,17 +886,7 @@ ctx.fill();
 })();
 
 
-/* ===== Mobile parallax tilt ===== */
-(function(){
-  const frame=document.querySelector('.photo-frame');
-  if(!frame) return;
-
-  window.addEventListener('deviceorientation', (e)=>{
-    const x=(e.gamma||0)/30;
-    const y=(e.beta||0)/40;
-    frame.style.transform=`rotateY(${x}deg) rotateX(${-y}deg)`;
-  });
-})();
+/* mobile tilt disabled for smoothness */
 
 
 /* ===== Premium touch tilt ===== */
@@ -965,7 +931,7 @@ function closeInfo(){
 <div class="info-modal" id="infoModal">
   <div class="info-card">
     <h3>Secret Message 💌</h3>
-    <p>If you are reading this… you are truly special. This little universe was made just to make you smile. 🌙✨. I literally used every single neuron in my brain 🧠 to create this. The background is from the exact day you were born — taken from NASA’s Hubble archive 🔭🌌. Everything here is carefully calculated 📐. And I’m sorry for not asking your permission… but if I had told you, it wouldn’t have been a surprise, dude... i just dont wanna share who am im i just being hidden. ik you wont care who made it up but im confused that am i happy or sad but no one cares. be happy enjoy your day. ik its kinda wierd that a person is doing a lot of efforts on a birthday wish but im just trying to make some one feel special.i have left my identity on the website. if you can find its good or let it be.... </p>
+    <p>If you are reading this… you are truly special. This little universe was made just to make you smile. 🌙✨</p>
     <button class="info-close" onclick="closeInfo()">Close</button>
   </div>
 </div>
